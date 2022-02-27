@@ -1,4 +1,4 @@
-# a simple demo using modelStudio for model explainability - classifaction
+# a simple demo using modelStudio for model explainability - classification
 
 library(DALEX)
 library(modelStudio)
