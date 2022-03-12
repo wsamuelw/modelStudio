@@ -1,12 +1,13 @@
 # a simple demo using modelStudio for model explainability - classification (xgboost)
 
+# load packages
 library(modelStudio)
 library(DALEX)
 library(tidyverse)
 library(tidymodels)
 
-# import data
-customers <- read.csv('/Users/samuelwong/Desktop/Work/Data/datacamp/bank_churners.csv', stringsAsFactors = T)
+# read data from github
+customers <- read.csv('https://raw.githubusercontent.com/wsamuelw/modelStudio/main/data/bank_churners.csv', stringsAsFactors = T)
 
 # convert factor to number
 customers$still_customer <- ifelse(customers$still_customer == 'yes', 1, 0) 
@@ -37,6 +38,7 @@ predictions <- customers_test %>%
 
 head(predictions)
 
+# select a row for yes and a row for no from the predictions
 # create a df with prediction = yes
 yes <- predictions %>% 
   filter(pred > 0.5) %>% 
@@ -51,6 +53,7 @@ new_observations <- rbind(yes, no)
 new_observations
 rownames(new_observations) <- c("Person A", "Person B")
 
+# create modelStudio
 modelStudio(explainer,
             new_observations,
             N = 200,  B = 5) # faster example
